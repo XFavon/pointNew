@@ -4,60 +4,61 @@ const urlLib = require('url')
 const querystring = require('querystring');
 
 var result = {};
+var ave = '';
 
 var server = http.createServer(function (req, res) {
-    var str = '';
-    req.on('data', function (data) {
-        str += data;
-    });
-    req.on('end', function () {
-        var obj = urlLib.parse(req.url, true);
-        const url = obj.pathname;
-        const GET = obj.query;
-        const POST = querystring.parse(str);
-        var result = {};
-        if (url == '/result') {
-            result[req.connection.remoteAddress] = POST.point;
-            res.end(JSON.stringify(result));
+
+    const obj = urlLib.parse(req.url, true);
+    const url = obj.pathname;
+    const GET = obj.query;
+
+    if (url == '/result') {
+        if (obj.search.indexOf('?') < 0) {
+            res.setHeader('Content-Type', 'application/json;charset=utf-8')
+            res.end(ave);
         } else {
-            var file_name = '';
-            if (obj.pathname.indexOf('.') < 0) {
-                file_name = './pages' + obj.pathname + '.html';
-            } else {
-                file_name = '.' + obj.pathname;
-            }
-            fs.readFile(file_name, function (err, data) {
-                if (err) {
-                    res.write('404');
-                } else {
-                    res.write(data);
-                }
-                res.end();
-            })
+            result[req.connection.remoteAddress] = GET.point;
+            console.log(result);
+            ave = average(result);
+            res.end();
         }
-    })
+    } else {
+        var file_name = '';
+        if (obj.pathname.indexOf('.') < 0) {
+            file_name = './pages' + obj.pathname + '.html';
+        } else {
+            file_name = '.' + obj.pathname;
+        }
+        fs.readFile(file_name, function (err, data) {
+            if (err) {
+                res.write('404');
+            } else {
+                res.write(data);
+            }
+            res.end();
+        })
+    }
 }).listen(8888);
 
 
-function ava(req, res, next) {
+function average(obj) {
     var count = 0,
-        result = 0,
+        total = 0,
         max = 0,
         min = 100;
-    for (var key in pointObj) {
+    for (var k in obj) {
         count++;
-        var point = parseInt(pointObj[key].point);
+        var point = parseInt(obj[k]);
         max = max < point ? point : max;
         min = min < point ? min : point;
-        result += point;
-
+        total += point;
     }
-    console.log(pointObj);
-    if (count < 3) {
-        var r = result / count;
+    if (count <= 3) {
+        var r = total / count;
     } else {
-        var r = (result - max - min) / (count - 2);
+        var r = (total - max - min) / (count - 2);
     }
-    console.log('打分人数: ' + count + ',  去掉最高分: ' + max + ',  去掉最低分: ' + min + ',  平均值: ' + r);
-    res.send('打分人数: ' + count + ',  去掉最高分: ' + max + ',  去掉最低分: ' + min + ',  平均值: ' + r);
+    var htmlStr = '打分人数: ' + count + ',  最高分: ' + max + ',  最低分: ' + min + ',  平均值: ' + r;
+    console.log(htmlStr);
+    return htmlStr;
 }

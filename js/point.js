@@ -49,4 +49,23 @@ window.onload = function () {
             submit.setAttribute('disabled', 'true');
         }
     }
+    document.getElementById('submit').onclick = function (e) {
+        e.preventDefault();
+
+        var name = document.querySelector('#name').value;
+        var point = document.querySelector('#point').value;
+
+        console.log(name, point);
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', location.origin + '/result?name=' + name + '&point=' + point);
+        xhr.send();
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                location.href = '/finish';
+                return false;
+            }
+        }
+        return false;
+    }
 }
