@@ -1,0 +1,40 @@
+body {
+    margin: 0;
+    padding: 0;
+    font: 14px 'consola';
+    text-align: center;
+}
+
+.content {
+    width: 400px;
+    padding: 30px;
+    margin: 0 auto;
+    border: 10px groove gray;
+}
+
+div {
+    margin: 50px;
+}
+
+input {
+    width: 100px;
+}
+
+.right {
+    border: 3px solid limegreen;
+    margin: 0 auto;
+    width: 200px;
+    background-color: springgreen;
+}
+
+.wrong {
+    border: 3px dashed darkred;
+    margin: 0 auto;
+    width: 200px;
+}
+
+#submit {
+    width: 200px;
+    height: 60px;
+    font-size: 24px;
+}

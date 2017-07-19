@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>point</title>
+    <link rel="stylesheet" href="/css/point.css">
+</head>
+
+<body>
+    <div class="content">
+        <form id="formId" action="/result" method="post">
+            <div id="divN">
+                <h1 id="title">项目评比打分页面</h1>
+                <h3>尊姓大名：<input type="text" id="name" placeholder="2-3个汉字" name="name"></h3>
+            </div>
+            <div id="divP">
+                <h2>这组的项目可以得到多少分呢~</h2>
+                <h3>我的打分：<input type="text" id="point" placeholder="0~100分" name="point"></h3>
+            </div><button id="submit" disabled>我还没填完 T.T</button>
+        </form>
+    </div>
+    <script src="/js/point.js"></script>
+
+</body>
+
+</html>
