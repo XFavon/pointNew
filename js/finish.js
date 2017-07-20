@@ -27,21 +27,27 @@ document.oncontextmenu = function () {
 var timer = setInterval(function () {
     console.log(t);
     if (t > 0) {
-        if (t < 4) {
-            bgc.style.backgroundImage = 'url(/img/baoman1.png)'
-        }
         t--;
-        ppp.innerHTML = t
+        ppp.innerHTML = t;
+        if (t < 4) {
+            if (t < 2) {
+                bgc.style.backgroundImage = 'url(/img/baoman2.jpeg)'
+                return;
+            }
+            bgc.style.backgroundImage = 'url(/img/baoman1.png)'
+            return;
+        }
     } else {
         clearInterval(timer);
         ppp.innerHTML = 0;
-        bgc.style.backgroundImage = 'url(/img/baoman2.jpeg)'
+        bgc.style.backgroundImage = 'url(/img/boom.jpg)'
+        return;
     }
 }, 1000);
 var timeO = setTimeout(function () {
     window.close();
     location.href = "about:blank"
-}, 8000);
+}, 7000);
 
 function shake(dom, t) {
     var t = t || 50;

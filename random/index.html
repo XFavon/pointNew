@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <ol>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ol>
+    <button id='btn'>Random!</button>
+    <script>
+        var arr = [];
+        var btn = document.querySelector('#btn'),
+            lis = document.querySelectorAll('li'),
+            timer;
+        btn.onclick = function () {
+            if (timer) {
+                return;
+            }
+            timer = setInterval(function () {
+                rdm(12);
+                console.log(arr);
+                lis[arr.length - 1].innerHTML = arr[arr.length - 1];
+            }, 1000);
+        }
+
+        function rdm(n) {
+            if (arr.length >= n) {
+                clearInterval(timer);
+                timer = null;
+                return;
+            }
+            var num = Math.floor(Math.random() * n) + 1;
+            if (arr.indexOf(num) < 0) {
+                arr.push(num);
+                return;
+            } else {
+                rdm(n);
+            }
+        }
+    </script>
+</body>
+
+</html>
